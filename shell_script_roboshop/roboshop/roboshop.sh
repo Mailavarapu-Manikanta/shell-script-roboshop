@@ -1,7 +1,7 @@
 #! /bin/bash
 
 AMI_ID=ami-0220d79f3f480ecf5
-SG_ID=sgr-05707389112ff40f8
+SG_ID=sg-00409b84d5ed7824a
 ZONE_ID=Z00781991HVRP5QMCQF9N
 DOMAIN_NAME="manijava.online"
 
@@ -11,7 +11,7 @@ do
 
 INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query 'Instances[0].InstanceId' --output text)
 
-if [ $instance -ne "frontend" ]; then
+if [ "$instance" != "frontend" ]; then
 
 IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 
